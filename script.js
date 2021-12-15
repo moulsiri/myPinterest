@@ -48,7 +48,7 @@ let data=[
 ]
 // Array to store info about the categories 
 let ctgData=[
-    {name:"Decoration"},
+    {name:"Favorite"},
 ]
 
 
@@ -100,13 +100,25 @@ content.addEventListener("click",function(e){
     let index=e.target.id;
     if(e.target.classList[0]==="sbtn"){
         tempArr[index].saved=!tempArr[index].saved
-
         setLocal(tempArr,"mainData");
         tempArr=retrieve("mainData");
         showCards(tempArr);
 
+        inptModal.addEventListener("click",function(dets){
+            //If User wants to close the window
+            console.log(dets.target);
+             if(dets.target.id==="cls"){
+                            tempArr[index].saved=!tempArr[index].saved
+        
+                            setLocal(tempArr,"mainData");
+                            tempArr=retrieve("mainData");
+                            inptModal.style.display="none";
+                            showCards(tempArr);
+                        }
+        })
         if(tempArr[index].saved){
             inptModal.style.display="initial";
+
             ctgList.addEventListener("click",function(d){
                 // let ctg=clips[d.target.id].querySelector("a").textContent;
                 let tempCtg=retrieve("category");
@@ -118,8 +130,6 @@ content.addEventListener("click",function(e){
                 tempArr=retrieve("mainData");
                 showCards(tempArr);
                 inptModal.style.display="none";
-
-
             })
 
             // showCtg("mainData");
@@ -163,6 +173,9 @@ checkCtg.addEventListener("change",function(d){
     }
 })
 
+
+
+
 // Categorising the data related to the user INput 
 // getting input value
 function getCtg(){
@@ -178,6 +191,7 @@ function showCtg(ctgArr){
     let t="";
     ctgArr.forEach(function(e,i){
         t+=`<div class="cctg" id="${i}">
+        <i class="ri-close-circle-fill cursor close" id="${i}"></i>
         <a href="#" id="${i}">${e.name}</a>
     </div>`
     })
@@ -205,9 +219,44 @@ cinpt.addEventListener("keydown",function(e){
         setLocal(tempCtg,"category");
         showCtg(retrieve("category"));
         showCheck(retrieve("category"));
+        cinpt.value="";
     }
     
 })
+
+
+//Event to rmove the any Existing Categories
+ctgList.addEventListener("click",function(e){
+    // console.log(e.target.classList);
+    if(e.target.classList[2]==="close"){
+        let tCtg=retrieve("category");
+        setLocal(delCtgFromData(tCtg[e.target.id].name),"mainData");
+        setLocal(delCtg(e.target.id),"category");
+        showCtg(retrieve("category"));
+        showCards(retrieve("mainData"));
+        showCheck(retrieve("category"));
+        inptModal.style.display="none";
+
+
+    }
+})
+//function of delete the category from the array
+delCtg=(index)=>{
+let arr=retrieve("category");
+arr.pop(index);
+console.log(arr)
+return arr;
+}
+//refresh the main data after the category is removed 
+delCtgFromData=(ctg)=>{
+    let arr=retrieve("mainData");
+    arr.forEach(function(e,i){
+        if(e.ctg===ctg){
+            delete e.ctg;
+        }
+    })
+    return arr;
+}
 
 //Initial work
 if(local.getItem("mainData")===null){
@@ -216,8 +265,8 @@ if(local.getItem("mainData")===null){
 if(local.getItem("category")===null){
     setLocal(ctgData,"category");
 }
-// setLocal(data,"mainData");
-// setLocal(ctgData,"category");
+setLocal(data,"mainData");
+setLocal(ctgData,"category");
 
 
 let main=retrieve("mainData");

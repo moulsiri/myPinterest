@@ -105,7 +105,7 @@ html,body{
     width:100%;
     /* background-color:rgb(247, 247, 114); */
     padding:0em 2em;
-    display: grid;
+    /* display: grid; */
     /* grid-template-columns: 10% 10% 10%; */
     display:flex;
     flex-wrap: wrap;
@@ -148,7 +148,7 @@ html,body{
     transition:opacity cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
 }
 .sbtn{
-    padding:1em 2em;
+    padding:1em 1.5em;
     border:none;
     letter-spacing:.1em;
     background:rgb(253, 1, 43);
@@ -209,6 +209,16 @@ html,body{
     display: none;
     border-radius:2em;
 }
+#category>i{
+    position: absolute;
+    top:-10px;
+    right:-10px;
+    background-color:rgb(253, 1, 43) ;
+    color: #fff;
+    border-radius: 50%;
+    padding: .5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
+}
 /* #ccntnt{
     width: 100%;
     height: inherit;
@@ -244,6 +254,7 @@ html,body{
 .cctg{
     padding:.5em 1em;
     height: fit-content;
+    position:relative;
     width: fit-content;
     /* background-color:rgb(253, 1, 43) ; */
     border:1px solid rgb(253, 1, 43) ;
@@ -256,6 +267,15 @@ html,body{
     letter-spacing: .1em;
     color:rgb(253, 1, 43);
     
+}
+.cctg i{
+    position:absolute;
+    top:-5px;
+    background-color: #fff;
+    right:-5px;
+    color:rgb(253, 1, 43) ;
+   
+
 }
 
 /* Extra  */
