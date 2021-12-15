@@ -100,7 +100,7 @@ html,body{
 
 /* Main Content  */
 #content{
-    height:200vh;
+    height:250vh;
     /* overflow-wrap: break-word; */
     width:100%;
     /* background-color:rgb(247, 247, 114); */
@@ -110,16 +110,11 @@ html,body{
     display:flex;
     flex-wrap: wrap;
     flex-direction: column;
+    align-items: flex-start;
     padding-top:6em;
 }
-/* .colmn{
-    width: calc(92%/5);
-    min-height:inherit;
-    display: flex;
-    margin-left: 1em;
-    flex-direction: column;
-    justify-content: space-between;
-} */
+
+/* Bunch of cards that contains the images  */
 .card{
     width: calc(92%/5);
     margin-top: 30px;
@@ -134,7 +129,6 @@ html,body{
     /* position: absolute; */
     width: 100%;
 }
-
 .ovly{
     width: 100%;
     pointer-events: none;
@@ -209,6 +203,7 @@ html,body{
     display: none;
     border-radius:2em;
 }
+/* Close button  */
 #category>i{
     position: absolute;
     top:-10px;
@@ -219,12 +214,6 @@ html,body{
     padding: .5em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
 }
-/* #ccntnt{
-    width: 100%;
-    height: inherit;
-    padding: 1em;
-    /* background-color: aquamarine; */
-
 #inpt{
     width:90%;
     height: 5vh;
@@ -235,16 +224,14 @@ html,body{
     margin: 1em auto;
     padding:.1em 1em;
     justify-content:space-between;
-    /* background-color: teal; */
 }
 #inpt input{
     width: 95%;
     border:none;
     outline:none;
 }
-#cclip{
+#ctgList{
     height: 90%;
-    /* background-color: red; */
     display: flex;
     flex-wrap: wrap;
     width: 100%;
