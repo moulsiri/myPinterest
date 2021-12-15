@@ -111,7 +111,25 @@ function showCards(arr){
     })
     content.innerHTML=t;
 }
-
+//function of delete the category from the array
+delCtg=(index)=>{
+    let arr=retrieve("category");
+    arr.splice(index,1);
+    console.log(arr)
+    return arr;
+    }
+    //refresh the main data after the category is removed 
+    delCtgFromData=(ctg)=>{
+        let arr=retrieve("mainData");
+        arr.forEach(function(e,i){
+            if(e.ctg===ctg){
+                e.saved=false;
+                delete e.ctg;
+            }
+        })
+        console.log(arr);
+        return arr;
+    }
 
 // Pinning the images 
 // #main event
@@ -128,7 +146,7 @@ content.addEventListener("click",function(e){
 
         inptModal.addEventListener("click",function(dets){
             //If User wants to close the window
-            console.log(dets.target);
+            // console.log(dets.target);
              if(dets.target.id==="cls"){
                             tempArr[index].saved=!tempArr[index].saved
         
@@ -140,7 +158,8 @@ content.addEventListener("click",function(e){
         })
         if(tempArr[index].saved){
             inptModal.style.display="initial";
-
+            cinpt.disabled=false;
+            cinpt.focus();
             ctgList.addEventListener("click",function(d){
                 // let ctg=clips[d.target.id].querySelector("a").textContent;
                 let tempCtg=retrieve("category");
@@ -162,6 +181,37 @@ content.addEventListener("click",function(e){
             tempArr=retrieve("mainData");
             showCards(tempArr)
         }
+    }
+    if(e.target.classList[2]==="sctg"){
+        console.log("hello");
+        inptModal.style.display="initial";
+        cinpt.disabled=true;
+        inptModal.addEventListener("click",function(dets){
+            if(dets.target.id==="cls"){
+                inptModal.style.display="none";
+            }
+
+        })
+//Event to rmove the any Existing Categories
+        ctgList.addEventListener("click",function(e){
+            // console.log(e.target.classList);
+            if(e.target.classList[2]==="close"){
+                let tCtg=retrieve("category");
+                // console.log(tCtg[e.target.id].name);
+                setLocal(delCtgFromData(tCtg[e.target.id].name),"mainData");
+                // let arrrr=retrieve("mainData");
+                // console.log(arrrr);
+                showCards(retrieve("mainData"));
+                setLocal(delCtg(e.target.id),"category");
+                showCtg(retrieve("category"));
+                showCheck(retrieve("category"));
+                cinpt.focus();
+                inptModal.style.display="none";
+                showCards(retrieve("mainData"));
+        
+            }
+        })
+
     }
 
 })
@@ -243,43 +293,15 @@ cinpt.addEventListener("keydown",function(e){
         showCtg(retrieve("category"));
         showCheck(retrieve("category"));
         cinpt.value="";
+        cinpt.blur();
     }
     
 })
 
 
-//Event to rmove the any Existing Categories
-ctgList.addEventListener("click",function(e){
-    // console.log(e.target.classList);
-    if(e.target.classList[2]==="close"){
-        let tCtg=retrieve("category");
-        setLocal(delCtgFromData(tCtg[e.target.id].name),"mainData");
-        setLocal(delCtg(e.target.id),"category");
-        showCtg(retrieve("category"));
-        showCards(retrieve("mainData"));
-        showCheck(retrieve("category"));
-        inptModal.style.display="none";
 
 
-    }
-})
-//function of delete the category from the array
-delCtg=(index)=>{
-let arr=retrieve("category");
-arr.pop(index);
-console.log(arr)
-return arr;
-}
-//refresh the main data after the category is removed 
-delCtgFromData=(ctg)=>{
-    let arr=retrieve("mainData");
-    arr.forEach(function(e,i){
-        if(e.ctg===ctg){
-            delete e.ctg;
-        }
-    })
-    return arr;
-}
+
 
 //Initial work
 if(local.getItem("mainData")===null){
