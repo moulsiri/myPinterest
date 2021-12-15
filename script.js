@@ -5,6 +5,28 @@ let ctgList=document.querySelector("#cclip");
 let flag=1;
 let showBtn=document.querySelector("#showClip");
 let checkCtg=document.querySelector("#show");
+
+//chalo mouseover bhi lag gya
+// let overlay=document.querySelectorAll(".ovly");
+content.addEventListener("mouseover",function(e){
+
+    // console.log(e.target.id);
+    if(e.target.className==="cimg"){
+        document.querySelectorAll(".ovly")[e.target.id].style.opacity=1;
+        document.querySelectorAll(".ovly")[e.target.id].style.pointerEvents="initial";
+    }
+})
+content.addEventListener("mouseout",function(e){
+    
+    if(e.target.className==="ovly"){
+    let index=e.target.id;
+    document.querySelectorAll(".ovly")[e.target.id].style.opacity=0;
+    document.querySelectorAll(".ovly")[e.target.id].style.pointerEvents="none";
+    }  
+
+})
+
+// button to show all categories
 document.querySelector("#cbtn").addEventListener("click",function(){
     if(flag===1){
         showBtn.style.width="30%";
@@ -18,6 +40,7 @@ document.querySelector("#cbtn").addEventListener("click",function(){
 
     }
 })
+
 //mouseover on search bar inside the navbar
 document.querySelector("#srch").addEventListener("mouseover",function(){
    this.style.border="none";
@@ -69,11 +92,11 @@ function showCards(arr){
         t+=`<div class="card">
         <div class="ovly" id="${i}">
             <button class="sbtn cursor" id="${i}">
-            ${elm.saved?"PINNED":"PIN"}
+            ${elm.saved?"saved":"save"}
             </button>
             <div class="ctg">
                 <h5>${elm.ctg?elm.ctg:"save if you like"}</h5>
-                <i class="ri-arrow-drop-down-line cursor" ></i>
+                <i class="ri-arrow-drop-down-line cursor sctg" ></i>
             </div>
             
             <h3>${elm.name}
@@ -81,7 +104,7 @@ function showCards(arr){
              </h3>
              <a download href="./github.png"><i class="ri-download-cloud-2-line"></i></a></a>
         </div>
-        <img src="${elm.img}" id="${i}" alt="">
+        <img src="${elm.img}" id="${i}" class="cimg" alt="">
 
         
     </div>`;
@@ -96,8 +119,7 @@ content.addEventListener("click",function(e){
     let tempArr=retrieve("mainData");
     // let idd=(e.target.id).split('');
     // let index=tempArr[idd[0]][idd[1]];
-    // console.log(e.target.id);
-    let index=e.target.id;
+    let index=e.target.id;   
     if(e.target.classList[0]==="sbtn"){
         tempArr[index].saved=!tempArr[index].saved
         setLocal(tempArr,"mainData");
@@ -141,6 +163,7 @@ content.addEventListener("click",function(e){
             showCards(tempArr)
         }
     }
+
 })
 
 //Showing the data category wise
@@ -265,8 +288,8 @@ if(local.getItem("mainData")===null){
 if(local.getItem("category")===null){
     setLocal(ctgData,"category");
 }
-setLocal(data,"mainData");
-setLocal(ctgData,"category");
+// setLocal(data,"mainData");
+// setLocal(ctgData,"category");
 
 
 let main=retrieve("mainData");
@@ -277,7 +300,6 @@ showCards(main);
 
 
 // create array (not used yet)
-
 function getElement(elem,ctg){
     let arr2=retrieve(ctg);
     if(arr2===null){
@@ -295,41 +317,3 @@ function getElement(elem,ctg){
     return arr2;
 
 }
-
-
-// let overlay=document.querySelectorAll(".ovly");
-// content.addEventListener("mouseover",function(e){
-//     // console.log(e.target.className);
-//     if(e.target.className==="cimg"){
-//         let idd=(e.target.id).split('');
-//     let index=data[idd[0]][idd[1]].cid;
-//          overlay[index].style.opacity=1;
-//     overlay[index].style.pointerEvents="initial";
-//     }
-// })
-// content.addEventListener("mouseout",function(e){
-    
-//     if(e.target.className==="ovly"){
-//         let idd=(e.target.id).split('');
-//     let index=data[idd[0]][idd[1]].cid;
-//          overlay[index].style.opacity=0;
-//     overlay[index].style.pointerEvents="none";
-//     }  
-
-// })
-
-// let checkbx=document.querySelectorAll("#show input");
-// let checkNm=document.querySelectorAll("#show label");
-
-// for(let i=0;i<checkbx.length;i++){
-//     checkbx[i].addEventListener("change",function(d){
-//         if(checkbx[d.target.id].checked){
-//             // console.log(checkNm[d.target.id].textContent);
-//             showCards(filter(checkNm[d.target.id].textContent));
-//         }
-//         else{
-//             let dt=retrieve("mainData")
-//             showCards(dt);
-//         }
-//     })
-// }
